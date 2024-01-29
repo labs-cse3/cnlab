@@ -16,7 +16,6 @@ void main()
         case 1:
             printf("\nData Encryption");
             printf("\nEnter the plain text:");
-            fflush(stdin);
             scanf("%s",plain);
             printf("\nEnter the encryption key:");
             scanf("%s", &key);
