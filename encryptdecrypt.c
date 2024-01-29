@@ -17,7 +17,7 @@ void main()
             printf("\nData Encryption");
             printf("\nEnter the plain text:");
             fflush(stdin);
-            scanf("%s", &plain);
+            scanf("%s",plain);
             printf("\nEnter the encryption key:");
             scanf("%s", &key);
             lp = strlen(key);
