@@ -9,55 +9,54 @@ int main()
     printf("enter sender side message \n");
     for (i = 0; i < size; i++)
     {
-        
-        for ( j = 0; j < 5; j++)
+
+        for (j = 0; j < 5; j++)
         {
-                scanf("%d", &a[i][j]);
+            scanf("%d", &a[i][j]);
         }
-        
     }
     printf("enter reciver side message \n");
     for (i = 0; i < size; i++)
     {
-        
-        for ( j = 0; j < 5; j++)
+
+        for (j = 0; j < 5; j++)
         {
-                scanf("%d", &b[i][j]);
+            scanf("%d", &b[i][j]);
         }
     }
-    int c[5],d[5],flag=0;
-    for (i = 0; i < size; i++)
+    int c[5], d[5], flag = 0;
+    for (i = 0; i < 5; i++)
     {
-        c[i]=0;
-        d[i]=0;
-        for ( j = 0; j < size; j++)
+        c[i] = 0;
+        d[i] = 0;
+        for (j = 0; j < size; j++)
         {
-                c[i]+=a[j][i];
-                d[i]+=b[j][i];
+            c[i] += a[j][i];
+            d[i] += b[j][i];
         }
     }
     printf("sender side checksum : ");
-    for (i = 0; i < size; i++)
+    for (i = 0; i < 5; i++)
     {
-        printf("%d",c[i]);
+        printf("%d", c[i]);
     }
     printf("\nreciver side checksum : ");
-    for (i = 0; i < size; i++)
+    for (i = 0; i < 5; i++)
     {
-        printf("%d",d[i]);
+        printf("%d", d[i]);
     }
-    for (i = 0; i < size; i++)
+    for (i = 0; i < 5; i++)
     {
-       if(c[i]!=d[i]){
-        flag = 1;
-        break;
-       }
+        if (c[i] != d[i])
+        {
+            flag = 1;
+            break;
+        }
     }
-    if(flag==0)
-    printf("\nno error\n");
+    if (flag == 0)
+        printf("\nno error\n");
     else
-    printf("error");
+        printf("error");
 
     return 0;
-    
 }
