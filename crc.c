@@ -1,104 +1,64 @@
-#include<stdio.h>
-#include<string.h>
-char msg[100],g[10],x1[10],rem[10],rcv[100],urcv[100];
-int m,n,j=0,f=-1,k=0;
-char xor(char a,char b)
+#include <stdio.h>
+#include <string.h>
+
+#define N strlen(gen_poly)
+char data[28];
+char check_value[28];
+char gen_poly[10];
+int data_length, i, j;
+void XOR()
 {
-	if(a==b)
-	return '0';
-	else
-	return '1';
+    for (j = 1; j < N; j++)
+        check_value[j] = ((check_value[j] == gen_poly[j]) ? '0' : '1');
 }
-void cal(char x2[])
+void receiver()
 {
-  k=0;
-	for(int i=0;i<n;i++)
-	{
-		rem[i]=xor(x1[i],g[i]);
-	}
-	while(rem[k]!='1' && k<=n)
-	{
-			k++;
-	}
-	int q=0,p=k;
-	while(rem[p]!='\0')
-	{
-		x1[q++]=rem[p++];
-	}
-		
-	for(int r=0;r<k;r++)
-	{
-		x1[q++]=x2[j++];
-	}
+    printf("Enter the received data: ");
+    scanf("%s", data);
+    printf("\n-----------------------------\n");
+    printf("Data received: %s", data);
+    crc();
+    for (i = 0; (i < N - 1) && (check_value[i] != '1'); i++)
+        ;
+    if (i < N - 1)
+        printf("\nError detected\n\n");
+    else
+        printf("\nNo error detected\n\n");
 }
 
-void crc(char x2[])
+void crc()
 {
-	j=0;
-	for(int i=0;i<n;i++)
-	{
-			x1[i]=x2[j++];
-	}
-	
-	while(x2[j]!='\0')
-	{
-		cal(x2);
-	}
-	cal(x2);	
+    for (i = 0; i < N; i++)
+        check_value[i] = data[i];
+    do
+    {
+        if (check_value[0] == '1')
+            XOR();
+        for (j = 0; j < N - 1; j++)
+            check_value[j] = check_value[j + 1];
+        check_value[j] = data[i++];
+    } while (i <= data_length + N - 1);
 }
-void main()
+
+int main()
 {
-	printf("Enter the message : ");
-	scanf("%s",msg);
-	printf("\nEnter Divisor : ");
-	scanf("%s",g);
-	n=strlen(g);
-	m=strlen(msg);
-	
-	for(int i=0;i<m;i++)
-	{
-		rcv[i]=msg[i];
-	}
-	
-	for(int i=m;i<m+n-1;i++)
-	{
-		msg[i]='0';
-	}
-	
-	printf("\nAfter appending zeroes the message : %s\n",msg);
-	
-	crc(msg);
-	
-	printf("\nReminder  is  : %s\n",rem);
-	
-	int ind=1;
-	for(int i=m;i<m+n-1;i++)
-	{
-		rcv[i]=rem[ind++];
-	}
-	
-	printf("\nReciever message without errors is : %s\n",rcv);
-	
-	printf("\nEnter the Recieved message : ");
-	scanf("%s",urcv);
-	
-	crc(urcv);
-	
-	printf("\nReminder of given msg is : %s\n",rem);
-	
-	int flag=1;
-	
-	for(int i=0;i<n;i++)
-	{
-		if(rem[i]!='0')
-		{
-			flag=0;
-		}
-	}
-	if(flag)
-		printf("\nNO ERROR ! \n\n");
-	else
-		printf("\n ERROR DETECTED!!!!\n\n");	
+    printf("\nEnter data to be transmitted: ");
+    scanf("%s", data);
+    printf("\n Enter the Generating polynomial: ");
+    scanf("%s", gen_poly);
+    data_length = strlen(data);
+    for (i = data_length; i < data_length + N - 1; i++)
+        data[i] = '0';
+    printf("\n----------------------------------------");
+    printf("\n Data padded with n-1 zeros : %s", data);
+    printf("\n----------------------------------------");
+    crc();
+    printf("\nCRC or Check value is : %s", check_value);
+    for (i = data_length; i < data_length + N - 1; i++)
+        data[i] = check_value[i - data_length];
+    printf("\n----------------------------------------");
+    printf("\n Final data to be sent : %s", data);
+    printf("\n----------------------------------------\n");
+    receiver();
+    return 0;
 }
-	
-	 	
