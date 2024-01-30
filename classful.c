@@ -33,11 +33,11 @@ int main()
     scanf("%s", ip);
     extractIpAddress(ip, &ipAddress[0]);
     printf("\nIp Address: %03d. %03d. %03d. %03d\n", ipAddress[0], ipAddress[1], ipAddress[2], ipAddress[3]);
-    if (ipAddress[0] >= 0 && ipAddress[0] <= 127)
+    if (ipAddress[0] >= 0 && ipAddress[0] < 127)
         printf("Class A Ip Address.\n");
-    if (ipAddress[0] > 127 && ipAddress[0] < 191)
+    if (ipAddress[0] > 127 && ipAddress[0] <= 191)
         printf("Class B Ip Address.\n");
-    if (ipAddress[0] > 191 && ipAddress[0] < 224)
+    if (ipAddress[0] > 191 && ipAddress[0] <= 224)
         printf("Class C Ip Address.\n");
     if (ipAddress[0] > 224 && ipAddress[0] <= 239)
         printf("Class D Ip Address.\n");
